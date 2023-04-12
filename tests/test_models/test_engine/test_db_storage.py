@@ -86,3 +86,32 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestDBStorage(unittest.TestCase):
+    """Test DB storage class"""
+    @unittest.skipIf(os.getenv(HBNB_TYPE_STORAGE) != 'db',
+                     "not testing db storage")
+    def test_get(self):
+        """test case to return object or none"""
+        new_state = State(name="New York")
+        new_state.save()
+        new_user = User(email="stjohn123@foobar.com", password="qwazon")
+        new_user.save()
+        self.assertIs(new_state, models.storage.get("State", new_state.id))
+        self.assertIs(None, models.storage.get("State", "Pickle"))
+        self.assertIs(None, models.storage.get("Pickle", "Pickle"))
+        self.assertIs(new_user, models.storage.get("User", new_user.id))
+
+    @unittest.skipIf(os.getenv(HBNB_TYPE_STORAGE) != 'db',
+                     "not testing db storage")
+    def test_count(self):
+        """tests that adds new objects to database"""
+        current_count = models.storage.count()
+        self.assertIs(models.storage.count("woof"), 0)
+        new_state = State(name="Mindanao")
+        new_state.save()
+        new_user = User(email="stjohn123@foobar.com", password="qwazon")
+        new_user.save()
+        self.assertEqual(models.storage.count("State"), current_count + 1)
+        self.assertEqual(models.storage.count(), current_count + 2)
