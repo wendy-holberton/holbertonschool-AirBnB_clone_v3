@@ -23,7 +23,7 @@ def status():
 @app_views.route('/stats', strict_slashes=False)
 def count():
     return jsonify({
-        'amentities': models.storage.count(Amenity),
+        'amenities': models.storage.count(Amenity),
         'cities': models.storage.count(City),
         'places': models.storage.count(Place),
         'reviews': models.storage.count(Review),
