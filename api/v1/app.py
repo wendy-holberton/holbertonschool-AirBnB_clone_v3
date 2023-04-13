@@ -6,6 +6,7 @@ from models import storage
 from api.v1.views import app_views
 from flask import Blueprint
 from flask import Flask
+from flask import jsonify
 import os
 import threading
 
@@ -17,6 +18,10 @@ app.register_blueprint(app_views)
 @app.teardown_appcontext
 def close_storage(self):
     storage.close()
+
+@app.errorhandler(404)
+def handle_error(self):
+    return jsonify({"error": "Not found"})
 
 
 if __name__ == "__main__":
