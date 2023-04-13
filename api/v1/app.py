@@ -19,9 +19,10 @@ app.register_blueprint(app_views)
 def close_storage(self):
     storage.close()
 
+
 @app.errorhandler(404)
-def handle_error(self):
-    return jsonify({"error": "Not found"})
+def handle_error(e):
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
