@@ -66,7 +66,7 @@ def update_state(state_id):
         abort(400, description="Missing name")
 
     for key, value in json_dict.items():
-        if key not in ["created_at", "state_id", "id", "updated_at"]:
+        if key not in ["created_at", "id", "updated_at"]:
             setattr(state, key, value)
     storage.save()
     return jsonify(state.to_dict(), 200)
