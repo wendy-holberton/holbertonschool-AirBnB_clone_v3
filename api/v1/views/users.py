@@ -38,7 +38,7 @@ def delete_user(user_id):
     return jsonify({})
 
 
-@app_views.route('/states', methods=['POST'],
+@app_views.route('/users', methods=['POST'],
                  strict_slashes=False)
 def create_user():
     json_dict = request.get_json()
@@ -53,10 +53,10 @@ def create_user():
     return jsonify(new_user.to_dict()), 201
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'],
+@app_views.route('/users/<user_id>', methods=['PUT'],
                  strict_slashes=False)
-def update_user(state_id):
-    user = storage.get(User, state_id)
+def update_user(user_id):
+    user = storage.get(User, user_id)
     if user is None:
         abort(404)
 
