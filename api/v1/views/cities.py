@@ -3,7 +3,7 @@
 Creates a view for State objects that handles all default RESTFul API actions
 """
 from models.state import State
-from models.state import City
+from models.city import City
 from models import storage
 from models.base_model import BaseModel
 from api.v1.views import app_views
