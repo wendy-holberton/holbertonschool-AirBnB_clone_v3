@@ -48,7 +48,7 @@ def create_user():
         abort(400, "Missing email")
     if 'password' not in json_dict:
         abort(400, "Missing passord")
-    new_user = State(**json_dict)
+    new_user = User(**json_dict)
     new_user.save()
     return jsonify(new_user.to_dict()), 201
 
