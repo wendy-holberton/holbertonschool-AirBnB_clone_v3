@@ -57,8 +57,8 @@ def create_review(place_id):
         abort(400, "Not a JSON")
     if "user_id" not in json_dict:
         abort(400, "Missing user_id")
-    if 'text' not in json_dict:
-        abort(400, description="Missing text")
+    if "text" not in json_dict:
+        abort(400, "Missing text")
     user = storage.get(User, json_dict.get("user_id"))
     if user is None:
         abort(404)
