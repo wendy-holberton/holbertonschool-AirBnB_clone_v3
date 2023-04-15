@@ -1,4 +1,4 @@
-#!/usr/bin/ndoe
+#!/usr/bin/python3
 """
 Create a new view for Amenity objects that handles all default RESTFul API
 actions
