@@ -16,7 +16,7 @@ from flask import request, jsonify, abort
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
 def list_reviews(place_id):
-    state = storage.get(Place, place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
 
@@ -80,7 +80,8 @@ def update_review(review_id):
         abort(400, "Not a JSON")
 
     for key, value in json_dict.items():
-        if key not in ["id", "user_id", "place_id", "created_at", "updated_at"]:
+        if key not in ["id", "user_id", "place_id", "created_at",
+                       "updated_at"]:
             setattr(review, key, value)
     storage.save()
     return jsonify(review.to_dict()), 200
