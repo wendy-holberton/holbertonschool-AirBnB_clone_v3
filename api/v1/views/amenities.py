@@ -19,7 +19,8 @@ def list_amenities():
     return jsonify(amenities_list)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['GET'], strict_slashes=False)
 def list_an_amenity(amenity_id):
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
