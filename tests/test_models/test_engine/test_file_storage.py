@@ -19,6 +19,7 @@ import os
 import pep8
 import unittest
 FileStorage = file_storage.FileStorage
+HBNB_TYPE_STORAGE = "HBNB_TYPE_STORAGE"
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
