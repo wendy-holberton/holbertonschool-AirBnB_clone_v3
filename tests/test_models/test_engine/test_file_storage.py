@@ -19,6 +19,7 @@ import os
 import pep8
 import unittest
 FileStorage = file_storage.FileStorage
+HBNB_TYPE_STORAGE = "HBNB_TYPE_STORAGE"
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
@@ -123,7 +124,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertIs(storage.get("qwazon", "qwazon"), None)
         new_user = User()
         new_user.save()
-        self.asserIs(storage.get("User", new_user.id), new_user)
+        self.assertIs(storage.get("User", new_user.id), new_user)
 
     @unittest.skipIf(os.getenv(HBNB_TYPE_STORAGE) == 'db',
                      "not testing db storage")

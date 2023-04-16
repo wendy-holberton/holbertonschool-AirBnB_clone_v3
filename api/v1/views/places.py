@@ -13,22 +13,18 @@ from api.v1.views import app_views
 from flask import request, jsonify, abort
 
 
-@app_views.route('/cities/<city_id>/palces', methods=['GET'],
+@app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def list_place_city(city_id):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
-
-    place_list = []
-    for place in city.places:
-        place_list.append(place.to_dict())
-    return jsonify(place_list)
+    return jsonify([place.to_dict() for place in city.places])
 
 
 @app_views.route('/places/<place_id>', methods=['GET'],
                  strict_slashes=False)
-def list_a_place(palce_id):
+def list_a_place(place_id):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -37,7 +33,7 @@ def list_a_place(palce_id):
 
 @app_views.route('/places/<place_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_placey(place_id):
+def delete_place(place_id):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -55,8 +51,13 @@ def create_place(city_id):
     json_dict = request.get_json()
     if not json_dict:
         abort(400, description="Not a JSON")
+    if not json_dict.get("user_id"):
+        abort(400, description="Missing user_id")
     if 'name' not in json_dict:
         abort(400, description="Missing name")
+    user = storage.get(User, json_dict.get("user_id"))
+    if user is None:
+        abort(404)
     new_place = Place(**json_dict)
     new_place.city_id = city_id
     new_place.save()
@@ -75,7 +76,7 @@ def update_place(place_id):
         abort(400, description="Not a JSON")
 
     for key, value in json_dict.items():
-        if key not in ["id", "created_at", "updated_at"]:
+        if key not in ["id", "user_id", "city_id", "created_at", "updated_at"]:
             setattr(place, key, value)
     storage.save()
     return jsonify(place.to_dict()), 200
