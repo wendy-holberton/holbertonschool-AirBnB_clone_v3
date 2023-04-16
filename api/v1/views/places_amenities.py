@@ -27,7 +27,7 @@ def list_amenities_place(place_id):
             for amenity_id in place.amenities])
 
 
-@app_views.route('/places/<place_id>', methods=['DELETE'],
+@app_views.route('/places/<place_id>/amenities/amenity_id', methods=['DELETE'],
                  strict_slashes=False)
 def delete_amenity_place(place_id, amenity_id):
     place = storage.get(Place, place_id)
