@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ holds class User"""
 import models
+from hashlib import md5
 from models.base_model import BaseModel, Base
 from os import getenv
 import sqlalchemy
