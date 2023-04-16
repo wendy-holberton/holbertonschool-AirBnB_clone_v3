@@ -124,7 +124,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertIs(storage.get("qwazon", "qwazon"), None)
         new_user = User()
         new_user.save()
-        self.asserIs(storage.get("User", new_user.id), new_user)
+        self.assertIs(storage.get("User", new_user.id), new_user)
 
     @unittest.skipIf(os.getenv(HBNB_TYPE_STORAGE) == 'db',
                      "not testing db storage")
@@ -134,7 +134,7 @@ class TestFileStorage(unittest.TestCase):
         current_count = len(storage.all())
         self.assertEqual(storage.count(), current_count)
         state_len = len(storage.all("State"))
-        self.assertEqual(storage.count(), state_len + 1)
+        self.assertEqual(storage.count("State"), state_len)
         new_state = State
         new_state.save()
         self.assertEqual(storage.count(), current_count + 1)
