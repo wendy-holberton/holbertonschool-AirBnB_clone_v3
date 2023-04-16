@@ -19,7 +19,6 @@ import os
 import pep8
 import unittest
 FileStorage = file_storage.FileStorage
-HBNB_TYPE_STORAGE = "HBNB_TYPE_STORAGE"
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
@@ -115,8 +114,7 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-    @unittest.skipIf(os.getenv(HBNB_TYPE_STORAGE) == 'db',
-                     "not testing db storage")
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
     def test_get(self):
         """test case to return object or none"""
         storage = FileStorage()
@@ -126,8 +124,7 @@ class TestFileStorage(unittest.TestCase):
         new_user.save()
         self.assertIs(storage.get("User", new_user.id), new_user)
 
-    @unittest.skipIf(os.getenv(HBNB_TYPE_STORAGE) == 'db',
-                     "not testing db storage")
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
     def test_count(self):
         """tests that adds new objects to database"""
         storage = FileStorage()
@@ -135,7 +132,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(storage.count(), current_count)
         state_len = len(storage.all("State"))
         self.assertEqual(storage.count("State"), state_len)
-        new_state = State(name="California")
+        new_state = State()
         new_state.save()
         self.assertEqual(storage.count(), current_count + 1)
         self.assertEqual(storage.count("State"), state_len + 1)
